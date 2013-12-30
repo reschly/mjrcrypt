@@ -83,4 +83,45 @@ class AES:
             b = b >> 1;
         return res;
     
+    # add two GF(2^8) polynomials
+    # FIPS 197 section 4.3
+    @staticmethod
+    def __GF_add(a,b):
+        res = [ a[0] ^ b[0],
+               a[1] ^ b[1],
+               a[2] ^ b[2],
+               a[3] ^ b[3]]
+        return res;
     
+    # multiply two GF(2^8) polynomials mod x^4+1
+    # FIPS 197 section 4.3
+    @staticmethod
+    def __GF_mul(a,b):
+        res = []
+        res[0] = (a[0]*b[0] ^ a[3]*b[1] ^ a[2]*b[2] ^ a[1]*b[3])&0xff;
+        res[1] = (a[1]*b[0] ^ a[0]*b[1] ^ a[3]*b[2] ^ a[2]*b[3])&0xff;
+        res[2] = (a[2]*b[0] ^ a[1]*b[1] ^ a[0]*b[2] ^ a[3]*b[3])&0xff;
+        res[3] = (a[3]*b[0] ^ a[2]*b[1] ^ a[1]*b[2] ^ a[0]*b[3])&0xff;
+        return res
+
+
+    # Cipher
+    # FIPS 197 Figure 5, Section 5.1
+    def __cipher(self, inbytes, outbytes):
+        self.__input_to_state_array(inbytes)
+        
+        self.__AddRoundKey(0);
+        
+        for i in range(1, AES.__numrounds[self.keysize]):
+            self.__SubBytes()
+            self.__ShiftRows()
+            self.__MixColumns()
+            self.__AddRoundKey(i)
+        # end for
+        
+        self.__SubBytes()
+        self.__ShiftRows()
+        self.__AddRoundKey(AES.__numrounds[self.keysize])
+        
+        self.__state_array_to_output(outbytes)
+    # end __cipher
