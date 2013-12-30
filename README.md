@@ -8,15 +8,15 @@ This library isn't any better than any other library.  I make no claims about sp
 This library will include algorithms I like, and won't include any I don't.  This means that:
 
 To be included (eventually):
-AES-GCM
-SHA-256 (384, 512) 
-Simon, Speck (using HMAC-SHA256 for AE?)
-AES-CTR-DRBG
-ECDHE/ECDSA (P-256, 384, 521)
-RSA-PSS
-RSA-OAEP
+* AES-GCM
+* SHA-256 (384, 512) 
+* Simon, Speck (using HMAC-SHA256 for AE?)
+* AES-CTR-DRBG
+* ECDHE/ECDSA (P-256, 384, 521)
+* RSA-PSS
+* RSA-OAEP
 
 To never be included:
-DES/3DES
-RSA-PKCS1 (sign or encrypt)
-RC4
+* DES/3DES
+* RSA-PKCS1 (sign or encrypt)
+* RC4
