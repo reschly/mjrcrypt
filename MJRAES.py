@@ -206,3 +206,27 @@ class AES:
             self.__state[1][i] = b
             self.__state[2][i] = c
             self.__state[3][i] = d
+            
+    # AddRoundKey()
+    # FIPS 197 Section 5.1.4
+    def __AddRoundKey(self, r):
+        self.__state[0][0] ^= self.__roundkeys[r][0]
+        self.__state[1][0] ^= self.__roundkeys[r][1]
+        self.__state[2][0] ^= self.__roundkeys[r][2]
+        self.__state[3][0] ^= self.__roundkeys[r][3]
+        self.__state[0][1] ^= self.__roundkeys[r][4]
+        self.__state[1][1] ^= self.__roundkeys[r][5]
+        self.__state[2][1] ^= self.__roundkeys[r][6]
+        self.__state[3][1] ^= self.__roundkeys[r][7]
+        self.__state[0][2] ^= self.__roundkeys[r][8]
+        self.__state[1][2] ^= self.__roundkeys[r][9]
+        self.__state[2][2] ^= self.__roundkeys[r][10]
+        self.__state[3][2] ^= self.__roundkeys[r][11]
+        self.__state[0][3] ^= self.__roundkeys[r][12]
+        self.__state[1][3] ^= self.__roundkeys[r][13]
+        self.__state[2][3] ^= self.__roundkeys[r][14]
+        self.__state[3][3] ^= self.__roundkeys[r][15]
+    
+        
+        
+        
