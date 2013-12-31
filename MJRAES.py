@@ -150,8 +150,8 @@ class AES:
     # SubBytes()
     # FIPS 197 Section 5.1.1
     def __SubBytes(self, b):
-        for i in len(self.__state):
-            for j in len(self.__state[i]):
+        for i in range(len(self.__state)):
+            for j in range(len(self.__state[i])):
                 self.__state[i][j] = AES.__sbox[self.state[i][j]]
     
     # ShiftRows()
@@ -186,4 +186,23 @@ class AES:
         self.__state[3][2] = b
         self.__state[3][3] = c
     
-    
+    # MixColumns()
+    # FIPS 197 Section 5.1.3
+    def __MixColumns(self):
+        for i in range(len(self.__state[0])): # for each column:
+            a = AES.__GF_mul(self.__state[0][i], 2) ^ \
+                AES.__GF_mul(self.__state[1][i], 3) ^ \
+                self.__state[2][i] ^ self.__state[3][i]
+            b = AES.__GF_mul(self.__state[1][i], 2) ^ \
+                AES.__GF_mul(self.__state[2][i], 3) ^ \
+                self.__state[0][i] ^ self.__state[3][i]
+            c = AES.__GF_mul(self.__state[2][i], 2) ^ \
+                AES.__GF_mul(self.__state[3][i], 3) ^ \
+                self.__state[0][i] ^ self.__state[1][i]
+            d = AES.__GF_mul(self.__state[3][i], 2) ^ \
+                AES.__GF_mul(self.__state[0][i], 3) ^ \
+                self.__state[1][i] ^ self.__state[2][i]
+            self.__state[0][i] = a
+            self.__state[1][i] = b
+            self.__state[2][i] = c
+            self.__state[3][i] = d
