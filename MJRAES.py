@@ -7,53 +7,53 @@ class AES:
     # FIPS 197 section 5
     __numrounds = { 16 : 10, 24 : 12, 32 : 14 }
     
-    # input to state array
+    # input to __state array
     # FIPS 197 section 3.4
     def __input_to_state_array(self, inbytes):
-        self.state[0][0] = inbytes[0]
-        self.state[1][0] = inbytes[1]
-        self.state[2][0] = inbytes[2]
-        self.state[3][0] = inbytes[3]
-        self.state[0][1] = inbytes[4]
-        self.state[1][1] = inbytes[5]
-        self.state[2][1] = inbytes[6]
-        self.state[3][1] = inbytes[7]
-        self.state[0][2] = inbytes[8]
-        self.state[1][2] = inbytes[9]
-        self.state[2][2] = inbytes[10]
-        self.state[3][2] = inbytes[11]
-        self.state[0][3] = inbytes[12]
-        self.state[1][3] = inbytes[13]
-        self.state[2][3] = inbytes[14]
-        self.state[3][3] = inbytes[15]
+        self.__state[0][0] = inbytes[0]
+        self.__state[1][0] = inbytes[1]
+        self.__state[2][0] = inbytes[2]
+        self.__state[3][0] = inbytes[3]
+        self.__state[0][1] = inbytes[4]
+        self.__state[1][1] = inbytes[5]
+        self.__state[2][1] = inbytes[6]
+        self.__state[3][1] = inbytes[7]
+        self.__state[0][2] = inbytes[8]
+        self.__state[1][2] = inbytes[9]
+        self.__state[2][2] = inbytes[10]
+        self.__state[3][2] = inbytes[11]
+        self.__state[0][3] = inbytes[12]
+        self.__state[1][3] = inbytes[13]
+        self.__state[2][3] = inbytes[14]
+        self.__state[3][3] = inbytes[15]
         
-    # state array to output
+    # __state array to output
     # FIPS 197 section 3.4
     def __state_array_to_output(self, outbytes):
-        outbytes[0] = self.state[0][0]
-        outbytes[1] = self.state[1][0]
-        outbytes[2] = self.state[2][0]
-        outbytes[3] = self.state[3][0]
-        outbytes[4] = self.state[0][1]
-        outbytes[5] = self.state[1][1]
-        outbytes[6] = self.state[2][1]
-        outbytes[7] = self.state[3][1]
-        outbytes[8] = self.state[0][2]
-        outbytes[9] = self.state[1][2]
-        outbytes[10] = self.state[2][2]
-        outbytes[11] = self.state[3][2]
-        outbytes[12] = self.state[0][3]
-        outbytes[13] = self.state[1][3]
-        outbytes[14] = self.state[2][3]
-        outbytes[15] = self.state[3][3]
+        outbytes[0] = self.__state[0][0]
+        outbytes[1] = self.__state[1][0]
+        outbytes[2] = self.__state[2][0]
+        outbytes[3] = self.__state[3][0]
+        outbytes[4] = self.__state[0][1]
+        outbytes[5] = self.__state[1][1]
+        outbytes[6] = self.__state[2][1]
+        outbytes[7] = self.__state[3][1]
+        outbytes[8] = self.__state[0][2]
+        outbytes[9] = self.__state[1][2]
+        outbytes[10] = self.__state[2][2]
+        outbytes[11] = self.__state[3][2]
+        outbytes[12] = self.__state[0][3]
+        outbytes[13] = self.__state[1][3]
+        outbytes[14] = self.__state[2][3]
+        outbytes[15] = self.__state[3][3]
     
-    # one state-column as a 32-bit word
+    # one __state-column as a 32-bit word
     # FIPS 197 section 3.5    
     def __column(self, col):
-        return (self.state[0][col] << 24) + \
-            (self.state[1][col] << 16) + \
-            (self.state[2][col] << 8) + \
-            (self.state[3][col])
+        return (self.__state[0][col] << 24) + \
+            (self.__state[1][col] << 16) + \
+            (self.__state[2][col] << 8) + \
+            (self.__state[3][col])
     
     # add two 8-bit values
     # FIPS 197 section 4.1
@@ -149,4 +149,41 @@ class AES:
     
     # SubBytes()
     # FIPS 197 Section 5.1.1
-    #def __SubBytes(self):
+    def __SubBytes(self, b):
+        for i in len(self.__state):
+            for j in len(self.__state[i]):
+                self.__state[i][j] = AES.__sbox[self.state[i][j]]
+    
+    # ShiftRows()
+    # FIPS 197 Section 5.1.2
+    def __ShiftRows(self):
+        # 0-shift of row 0
+        # 1 shift-left of row 1
+        a = self.__state[1][0]
+        b = self.__state[1][1]
+        c = self.__state[1][2]
+        d = self.__state[1][3]
+        self.__state[1][0] = b
+        self.__state[1][1] = c
+        self.__state[1][2] = d
+        self.__state[1][3] = a
+        # 2 shift-left of row 2
+        a = self.__state[2][0]
+        b = self.__state[2][1]
+        c = self.__state[2][2]
+        d = self.__state[2][3]
+        self.__state[2][0] = c
+        self.__state[2][1] = d
+        self.__state[2][2] = a
+        self.__state[2][3] = b
+        # 3 shift-left of row 3
+        a = self.__state[3][0]
+        b = self.__state[3][1]
+        c = self.__state[3][2]
+        d = self.__state[3][3]
+        self.__state[3][0] = d
+        self.__state[3][1] = a
+        self.__state[3][2] = b
+        self.__state[3][3] = c
+    
+    
