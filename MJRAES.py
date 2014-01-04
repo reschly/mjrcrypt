@@ -149,7 +149,7 @@ class AES:
     
     # SubBytes()
     # FIPS 197 Section 5.1.1
-    def __SubBytes(self, b):
+    def __SubBytes(self):
         for i in range(len(self.__state)):
             for j in range(len(self.__state[i])):
                 self.__state[i][j] = AES.__sbox[self.state[i][j]]
@@ -159,32 +159,14 @@ class AES:
     def __ShiftRows(self):
         # 0-shift of row 0
         # 1 shift-left of row 1
-        a = self.__state[1][0]
-        b = self.__state[1][1]
-        c = self.__state[1][2]
-        d = self.__state[1][3]
-        self.__state[1][0] = b
-        self.__state[1][1] = c
-        self.__state[1][2] = d
-        self.__state[1][3] = a
+        [a,b,c,d] = self.__state[1]
+        self.__state[1] = [b,c,d,a]
         # 2 shift-left of row 2
-        a = self.__state[2][0]
-        b = self.__state[2][1]
-        c = self.__state[2][2]
-        d = self.__state[2][3]
-        self.__state[2][0] = c
-        self.__state[2][1] = d
-        self.__state[2][2] = a
-        self.__state[2][3] = b
+        [a,b,c,d] = self.__state[2]
+        self.__state[2] = [c,d,a,b]
         # 3 shift-left of row 3
-        a = self.__state[3][0]
-        b = self.__state[3][1]
-        c = self.__state[3][2]
-        d = self.__state[3][3]
-        self.__state[3][0] = d
-        self.__state[3][1] = a
-        self.__state[3][2] = b
-        self.__state[3][3] = c
+        [a,b,c,d] = self.__state[3]
+        self.__state[3] = [d,a,b,c]
     
     # MixColumns()
     # FIPS 197 Section 5.1.3
@@ -228,5 +210,47 @@ class AES:
         self.__state[3][3] ^= self.__roundkeys[r][15]
     
         
+    # KeyExpansion()
+    # FIPS 197 Section 5.2
+    def __KeyExpansion(self, key):
+        numrounds = AES.__numrounds[len(key)] 
+        for i in range(len(key)):
+            self.__roundkeys[i//16][i%16] = key[i];
+            
+        for i in range(len(key), 16*(numrounds+1), 4):
+            temp = self.__roundkeys[(i-4)//16][(i-4)%16:((i-4)%16) + 4]
+
+            if (i % len(key)) == 0:
+                AES.__RotWord(temp)
+                AES.__SubWord(temp)
+                temp[0] ^= AES.__Rcon[i//len(key)] 
+            elif ((len(key) > 24) and (i % len(key) == 16)):
+                AES.__SubWord(temp)
+            
+            self.__roundkeys[i//16][i%16] = temp[0]
+            self.__roundkeys[(i+1)//16][(i+1)%16] = temp[1]
+            self.__roundkeys[(i+2)//16][(i+2)%16] = temp[2]
+            self.__roundkeys[(i+3)//16][(i+3)%16] = temp[3]
+    # end for i in range(len(key), 16*numrounds+1, 4)
+ 
+    # SubWord()
+    # FIPS 197 section 5.2
+    @staticmethod
+    def __SubWord(word):
+        for i in len(word):
+            word[i] = AES.__sbox[word[i]]
+
+    # RotWord()
+    # FIPS 197 Section 5.2
+    @staticmethod
+    def __RotWord(word):
+        [a,b,c,d] = word;
+        word = [b,c,d,a]
         
+    # Rcon
+    # FIPS 197 section 5.2
+    __Rcon = [0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36]
+
+        
+
         
