@@ -221,11 +221,11 @@ class AES:
             temp = self.__roundkeys[(i-4)//16][(i-4)%16:((i-4)%16) + 4]
 
             if (i % len(key)) == 0:
-                AES.__RotWord(temp)
-                AES.__SubWord(temp)
+                temp = AES.__RotWord(temp)
+                temp = AES.__SubWord(temp)
                 temp[0] ^= AES.__Rcon[i//len(key)] 
             elif ((len(key) > 24) and (i % len(key) == 16)):
-                AES.__SubWord(temp)
+                temp = AES.__SubWord(temp)
             
             self.__roundkeys[i//16][i%16] = temp[0]
             self.__roundkeys[(i+1)//16][(i+1)%16] = temp[1]
@@ -237,8 +237,9 @@ class AES:
     # FIPS 197 section 5.2
     @staticmethod
     def __SubWord(word):
-        for i in len(word):
+        for i in range(len(word)):
             word[i] = AES.__sbox[word[i]]
+        return word
 
     # RotWord()
     # FIPS 197 Section 5.2
@@ -246,11 +247,20 @@ class AES:
     def __RotWord(word):
         [a,b,c,d] = word;
         word = [b,c,d,a]
+        return word
         
     # Rcon
     # FIPS 197 section 5.2
-    __Rcon = [0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36]
+    __Rcon = [0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36]
 
         
-
+    def __init__(self, key):
+        '''Initializer
+        
+        Inputs:
+        key: raw aes key, as a (16, 24, or 32)-byte array
+        '''
+        assert(len(key) in [16, 24, 32], "Bad key size: %s.  Must be 16, 24, or 32 bytes." % len(key))
+        self.__roundkeys = [[0 for i in range(16)] for j in range(AES.__numrounds[len(key)]+1)]
+        self.__KeyExpansion(key)
         
