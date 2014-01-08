@@ -227,10 +227,10 @@ class AES:
             elif ((len(key) > 24) and (i % len(key) == 16)):
                 temp = AES.__SubWord(temp)
             
-            self.__roundkeys[i//16][i%16] = temp[0]
-            self.__roundkeys[(i+1)//16][(i+1)%16] = temp[1]
-            self.__roundkeys[(i+2)//16][(i+2)%16] = temp[2]
-            self.__roundkeys[(i+3)//16][(i+3)%16] = temp[3]
+            self.__roundkeys[i//16][i%16] = temp[0] ^ self.__roundkeys[(i-len(key))//16][i%16]
+            self.__roundkeys[(i+1)//16][(i+1)%16] = temp[1] ^ self.__roundkeys[(i+1-len(key))//16][(i+1)%16]
+            self.__roundkeys[(i+2)//16][(i+2)%16] = temp[2] ^ self.__roundkeys[(i+1-len(key))//16][(i+2)%16]
+            self.__roundkeys[(i+3)//16][(i+3)%16] = temp[3] ^ self.__roundkeys[(i+1-len(key))//16][(i+3)%16]
     # end for i in range(len(key), 16*numrounds+1, 4)
  
     # SubWord()
