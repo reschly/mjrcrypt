@@ -112,7 +112,7 @@ class AES:
         
         self.__AddRoundKey(0);
         
-        for i in range(1, AES.__numrounds[self.keysize]):
+        for i in range(1, AES.__numrounds[self.__keysize]):
             self.__SubBytes()
             self.__ShiftRows()
             self.__MixColumns()
@@ -121,7 +121,7 @@ class AES:
         
         self.__SubBytes()
         self.__ShiftRows()
-        self.__AddRoundKey(AES.__numrounds[self.keysize])
+        self.__AddRoundKey(AES.__numrounds[self.__keysize])
         
         self.__state_array_to_output(outbytes)
     # end __cipher
@@ -152,7 +152,7 @@ class AES:
     def __SubBytes(self):
         for i in range(len(self.__state)):
             for j in range(len(self.__state[i])):
-                self.__state[i][j] = AES.__sbox[self.state[i][j]]
+                self.__state[i][j] = AES.__sbox[self.__state[i][j]]
     
     # ShiftRows()
     # FIPS 197 Section 5.1.2
@@ -172,17 +172,17 @@ class AES:
     # FIPS 197 Section 5.1.3
     def __MixColumns(self):
         for i in range(len(self.__state[0])): # for each column:
-            a = AES.__GF_mul(self.__state[0][i], 2) ^ \
-                AES.__GF_mul(self.__state[1][i], 3) ^ \
+            a = AES.__mul(self.__state[0][i], 2) ^ \
+                AES.__mul(self.__state[1][i], 3) ^ \
                 self.__state[2][i] ^ self.__state[3][i]
-            b = AES.__GF_mul(self.__state[1][i], 2) ^ \
-                AES.__GF_mul(self.__state[2][i], 3) ^ \
+            b = AES.__mul(self.__state[1][i], 2) ^ \
+                AES.__mul(self.__state[2][i], 3) ^ \
                 self.__state[0][i] ^ self.__state[3][i]
-            c = AES.__GF_mul(self.__state[2][i], 2) ^ \
-                AES.__GF_mul(self.__state[3][i], 3) ^ \
+            c = AES.__mul(self.__state[2][i], 2) ^ \
+                AES.__mul(self.__state[3][i], 3) ^ \
                 self.__state[0][i] ^ self.__state[1][i]
-            d = AES.__GF_mul(self.__state[3][i], 2) ^ \
-                AES.__GF_mul(self.__state[0][i], 3) ^ \
+            d = AES.__mul(self.__state[3][i], 2) ^ \
+                AES.__mul(self.__state[0][i], 3) ^ \
                 self.__state[1][i] ^ self.__state[2][i]
             self.__state[0][i] = a
             self.__state[1][i] = b
@@ -262,5 +262,7 @@ class AES:
         '''
         assert len(key) in [16, 24, 32], "Bad key size: %s.  Must be 16, 24, or 32 bytes." % len(key)
         self.__roundkeys = [[0 for i in range(16)] for j in range(AES.__numrounds[len(key)]+1)]
+        self.__state = [[0 for i in range(4)] for j in range(4)]
         self.__KeyExpansion(key)
+        self.__keysize = len(key)
         
