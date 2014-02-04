@@ -275,3 +275,8 @@ class AES(object):
         self.__state = [bytearray(4) for i in range(4)]
         self.__KeyExpansion(key)
         self.__keysize = len(key)
+        
+    def _encrypt(self, inbytes, outbytes):
+        '''Encrypted a single block in ECB mode.  
+        Do not use unless you know what you're doing'''
+        self.__cipher(inbytes, outbytes)
