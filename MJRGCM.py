@@ -19,10 +19,7 @@ class GCM(object):
                 v >>= 1
             else:
                 v = (v >> 1) ^ r
-        z_arr = bytearray(16)
-        for i in range(z_arr):
-            z_arr[15-i] = z_int & 0xff;
-            z_int >>= 8
+        z_arr = bytearray(int.to_bytes(z_int, 16, byteorder='big'))
         return z_arr
         
     @staticmethod
@@ -90,6 +87,7 @@ class GCM(object):
         # calculate tag
         calculated_raw_tag = GCM.__ghash(H, aad, cipher)
         calculated_tag = bytearray(len(calculated_raw_tag))
+        # TODO: make this const_time_eq a util function
         for i in range(len(calculated_tag)):
             calculated_tag = calculated_raw_tag[i] ^ calculated_tag_mask[i]
         # compare calculated, actual tag
