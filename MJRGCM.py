@@ -1,4 +1,5 @@
 '''My GCM Module'''
+from MJRUTIL import constant_time_eq
 
 
 class GCM(object):
@@ -87,16 +88,10 @@ class GCM(object):
         # calculate tag
         calculated_raw_tag = GCM.__ghash(H, aad, cipher)
         calculated_tag = bytearray(len(calculated_raw_tag))
-        # TODO: make this const_time_eq a util function
         for i in range(len(calculated_tag)):
             calculated_tag = calculated_raw_tag[i] ^ calculated_tag_mask[i]
         # compare calculated, actual tag
-        if len(tag) != len(calculated_tag):
-            raise ValueError("Bad tag length")
-        diff = 0;
-        for i in range(len(tag)):
-            diff |= (tag[i] ^ calculated_tag[i])
-        if (tag != 0):
+        if not constant_time_eq(calculated_tag, tag):
             raise ValueError("Bad tag")
         # tag correct -- provide decrypt
         plaintext = bytearray(0)
@@ -131,5 +126,10 @@ class GCM(object):
             result[16-i] ^= (c_len & 0xff)
         result = GCM.__GF_mul(result, H)
                       
-        
+    def __init__(self, cipher):
+        '''Constructor.  cipher = an initialized instance of a 16-byte block cipher'''
+        self._cipher = cipher
+        # generate H
+        self._H = bytearray(16)
+        self._cipher._encrypt(b'\x00' * 16, self._H)
             
