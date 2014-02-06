@@ -41,7 +41,7 @@ class GCM(object):
             for i in range(16-l):
                 data.append(0)
     
-    def __auth_encrypt(self, iv, plaintext, aad):
+    def _auth_encrypt(self, iv, plaintext, aad):
         '''Authenticated encryption.  iv, plaintext, and aad'''
         if (len(iv) != 12):
             raise ValueError("IV must be 96 bits / 12 bytes")
@@ -70,7 +70,7 @@ class GCM(object):
             tag[i] = raw_tag[i] ^ tag_mask[i]
         return (cipher, tag)
     
-    def __auth_decrypt(self, iv, cipher, aad, tag):
+    def _auth_decrypt(self, iv, cipher, aad, tag):
         '''Authenticated decryption.  iv, plaintext, and aad'''
         if (len(iv) != 12):
             raise ValueError("IV must be 96 bits / 12 bytes")
