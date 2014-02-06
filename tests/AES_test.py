@@ -1,5 +1,7 @@
 '''Unit tests for MJRAES'''
 
+import sys
+sys.path.append("..")
 import unittest
 from MJRAES import AES
 
