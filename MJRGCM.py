@@ -29,7 +29,7 @@ class GCM(object):
         if (len(iv) != 16):
             raise ValueError("IV must be 128-bits / 16 bytes")
         for i in [15, 14, 13, 12]:
-            iv[i] += 1
+            iv[i] = (iv[i] + 1) & 0xff
             if (iv[i] != 0):
                 break
     
