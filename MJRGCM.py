@@ -83,7 +83,7 @@ class GCM(object):
         calculated_raw_tag = self.__ghash(aad, cipher)
         calculated_tag = bytearray(len(calculated_raw_tag))
         for i in range(len(calculated_tag)):
-            calculated_tag = calculated_raw_tag[i] ^ calculated_tag_mask[i]
+            calculated_tag[i] = calculated_raw_tag[i] ^ calculated_tag_mask[i]
         # compare calculated, actual tag
         if not constant_time_eq(calculated_tag, tag):
             raise ValueError("Bad tag")

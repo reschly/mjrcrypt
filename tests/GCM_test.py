@@ -64,8 +64,8 @@ class GCM_test(unittest.TestCase):
         GCM._GCM__pad128(ar5) # @UndefinedVariable
         self.assertEqual(ar5, ar5_expected)
 
-    def test_auth_encrypt(self):
-        '''tests the _auth_encrypt method.  Test cases from gcm-spec.pdf'''
+    def test_auth_encrypt_decrypt(self):
+        '''tests the _auth_encrypt and _auth_decrypt methods.  Test cases from gcm-spec.pdf'''
         # Test Case 1
         aes = AES(b'\x00' * 16)
         gcm = GCM(aes)
@@ -78,6 +78,13 @@ class GCM_test(unittest.TestCase):
         cipher, tag = gcm._auth_encrypt(iv, plain, aad)
         self.assertEqual(cipher, expected_cipher)
         self.assertEqual(tag, expected_tag)
+        dec_plain = gcm._auth_decrypt(iv, cipher, aad, tag)
+        self.assertEqual(dec_plain, plain)
+        try:
+            gcm._auth_decrypt(iv, cipher, aad, gcm._H)
+            self.fail("Failed to throw exception on bad tag")
+        except ValueError:
+            pass
         # Test Case 2
         aes = AES(b'\x00' * 16)
         gcm = GCM(aes)
@@ -90,6 +97,13 @@ class GCM_test(unittest.TestCase):
         cipher, tag = gcm._auth_encrypt(iv, plain, aad)
         self.assertEqual(cipher, expected_cipher)
         self.assertEqual(tag, expected_tag)
+        dec_plain = gcm._auth_decrypt(iv, cipher, aad, tag)
+        self.assertEqual(dec_plain, plain)
+        try:
+            gcm._auth_decrypt(iv, cipher, aad, gcm._H)
+            self.fail("Failed to throw exception on bad tag")
+        except ValueError:
+            pass
         # Test Case 3
         aes = AES(b'\xfe\xff\xe9\x92\x86\x65\x73\x1c\x6d\x6a\x8f\x94\x67\x30\x83\x08')
         gcm = GCM(aes)
@@ -108,6 +122,13 @@ class GCM_test(unittest.TestCase):
         cipher, tag = gcm._auth_encrypt(iv, plain, aad)
         self.assertEqual(cipher, expected_cipher)
         self.assertEqual(tag, expected_tag)
+        dec_plain = gcm._auth_decrypt(iv, cipher, aad, tag)
+        self.assertEqual(dec_plain, plain)
+        try:
+            gcm._auth_decrypt(iv, cipher, aad, gcm._H)
+            self.fail("Failed to throw exception on bad tag")
+        except ValueError:
+            pass
         # Test Case 4
         aes = AES(b'\xfe\xff\xe9\x92\x86\x65\x73\x1c\x6d\x6a\x8f\x94\x67\x30\x83\x08')
         gcm = GCM(aes)
@@ -126,6 +147,13 @@ class GCM_test(unittest.TestCase):
         cipher, tag = gcm._auth_encrypt(iv, plain, aad)
         self.assertEqual(cipher, expected_cipher)
         self.assertEqual(tag, expected_tag)
+        dec_plain = gcm._auth_decrypt(iv, cipher, aad, tag)
+        self.assertEqual(dec_plain, plain)
+        try:
+            gcm._auth_decrypt(iv, cipher, aad, gcm._H)
+            self.fail("Failed to throw exception on bad tag")
+        except ValueError:
+            pass
         # Test Case 5 skipped: IV of length other than 12 not supported
         # Test Case 6 skipped: IV of length other than 12 not supported
         # Test Case 7:
@@ -140,6 +168,13 @@ class GCM_test(unittest.TestCase):
         cipher, tag = gcm._auth_encrypt(iv, plain, aad)
         self.assertEqual(cipher, expected_cipher)
         self.assertEqual(tag, expected_tag)
+        dec_plain = gcm._auth_decrypt(iv, cipher, aad, tag)
+        self.assertEqual(dec_plain, plain)
+        try:
+            gcm._auth_decrypt(iv, cipher, aad, gcm._H)
+            self.fail("Failed to throw exception on bad tag")
+        except ValueError:
+            pass
         # Test Case 8:
         aes = AES(b'\x00' * 24)
         gcm = GCM(aes)
@@ -152,6 +187,13 @@ class GCM_test(unittest.TestCase):
         cipher, tag = gcm._auth_encrypt(iv, plain, aad)
         self.assertEqual(cipher, expected_cipher)
         self.assertEqual(tag, expected_tag)
+        dec_plain = gcm._auth_decrypt(iv, cipher, aad, tag)
+        self.assertEqual(dec_plain, plain)
+        try:
+            gcm._auth_decrypt(iv, cipher, aad, gcm._H)
+            self.fail("Failed to throw exception on bad tag")
+        except ValueError:
+            pass
         # Test Case 9:
         aes = AES(b'\xfe\xff\xe9\x92\x86\x65\x73\x1c\x6d\x6a\x8f\x94\x67\x30\x83\x08\xfe\xff\xe9\x92\x86\x65\x73\x1c')
         gcm = GCM(aes)
@@ -170,6 +212,13 @@ class GCM_test(unittest.TestCase):
         cipher, tag = gcm._auth_encrypt(iv, plain, aad)
         self.assertEqual(cipher, expected_cipher)
         self.assertEqual(tag, expected_tag)
+        dec_plain = gcm._auth_decrypt(iv, cipher, aad, tag)
+        self.assertEqual(dec_plain, plain)
+        try:
+            gcm._auth_decrypt(iv, cipher, aad, gcm._H)
+            self.fail("Failed to throw exception on bad tag")
+        except ValueError:
+            pass
         # Test Case 10:
         aes = AES(b'\xfe\xff\xe9\x92\x86\x65\x73\x1c\x6d\x6a\x8f\x94\x67\x30\x83\x08\xfe\xff\xe9\x92\x86\x65\x73\x1c')
         gcm = GCM(aes)
@@ -188,6 +237,13 @@ class GCM_test(unittest.TestCase):
         cipher, tag = gcm._auth_encrypt(iv, plain, aad)
         self.assertEqual(cipher, expected_cipher)
         self.assertEqual(tag, expected_tag)
+        dec_plain = gcm._auth_decrypt(iv, cipher, aad, tag)
+        self.assertEqual(dec_plain, plain)
+        try:
+            gcm._auth_decrypt(iv, cipher, aad, gcm._H)
+            self.fail("Failed to throw exception on bad tag")
+        except ValueError:
+            pass
         # Test Case 11 skipped: IV of length other than 12 not supported
         # Test Case 12 skipped: IV of length other than 12 not supported
         # Test Case 13:
@@ -202,6 +258,13 @@ class GCM_test(unittest.TestCase):
         cipher, tag = gcm._auth_encrypt(iv, plain, aad)
         self.assertEqual(cipher, expected_cipher)
         self.assertEqual(tag, expected_tag)
+        dec_plain = gcm._auth_decrypt(iv, cipher, aad, tag)
+        self.assertEqual(dec_plain, plain)
+        try:
+            gcm._auth_decrypt(iv, cipher, aad, gcm._H)
+            self.fail("Failed to throw exception on bad tag")
+        except ValueError:
+            pass
         # Test Case 14:
         aes = AES(b'\x00' * 32)
         gcm = GCM(aes)
@@ -214,6 +277,13 @@ class GCM_test(unittest.TestCase):
         cipher, tag = gcm._auth_encrypt(iv, plain, aad)
         self.assertEqual(cipher, expected_cipher)
         self.assertEqual(tag, expected_tag)
+        dec_plain = gcm._auth_decrypt(iv, cipher, aad, tag)
+        self.assertEqual(dec_plain, plain)
+        try:
+            gcm._auth_decrypt(iv, cipher, aad, gcm._H)
+            self.fail("Failed to throw exception on bad tag")
+        except ValueError:
+            pass
         # Test Case 15:
         aes = AES(b'\xfe\xff\xe9\x92\x86\x65\x73\x1c\x6d\x6a\x8f\x94\x67\x30\x83\x08\xfe\xff\xe9\x92\x86\x65\x73\x1c\x6d\x6a\x8f\x94\x67\x30\x83\x08')
         gcm = GCM(aes)
@@ -232,6 +302,13 @@ class GCM_test(unittest.TestCase):
         cipher, tag = gcm._auth_encrypt(iv, plain, aad)
         self.assertEqual(cipher, expected_cipher)
         self.assertEqual(tag, expected_tag)
+        dec_plain = gcm._auth_decrypt(iv, cipher, aad, tag)
+        self.assertEqual(dec_plain, plain)
+        try:
+            gcm._auth_decrypt(iv, cipher, aad, gcm._H)
+            self.fail("Failed to throw exception on bad tag")
+        except ValueError:
+            pass
         # Test Case 16:
         aes = AES(b'\xfe\xff\xe9\x92\x86\x65\x73\x1c\x6d\x6a\x8f\x94\x67\x30\x83\x08\xfe\xff\xe9\x92\x86\x65\x73\x1c\x6d\x6a\x8f\x94\x67\x30\x83\x08')
         gcm = GCM(aes)
@@ -250,6 +327,13 @@ class GCM_test(unittest.TestCase):
         cipher, tag = gcm._auth_encrypt(iv, plain, aad)
         self.assertEqual(cipher, expected_cipher)
         self.assertEqual(tag, expected_tag)
+        dec_plain = gcm._auth_decrypt(iv, cipher, aad, tag)
+        self.assertEqual(dec_plain, plain)
+        try:
+            gcm._auth_decrypt(iv, cipher, aad, gcm._H)
+            self.fail("Failed to throw exception on bad tag")
+        except ValueError:
+            pass
         # Test Case 17 skipped: IV of length other than 12 not supported
         # Test Case 18 skipped: IV of length other than 12 not supported
 
