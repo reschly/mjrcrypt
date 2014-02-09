@@ -1,5 +1,7 @@
 '''My GCM Module'''
-from MJRUTIL import constant_time_eq
+import sys
+sys.path.append("..")
+from details.MJRUTIL import constant_time_eq
 
 
 class GCM(object):

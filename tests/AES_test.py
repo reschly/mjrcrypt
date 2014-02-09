@@ -3,7 +3,7 @@
 import sys
 sys.path.append("..")
 import unittest
-from MJRAES import AES
+from details.MJRAES import AES
 
 class AES_test(unittest.TestCase):
     '''TestCase for MJRAES'''

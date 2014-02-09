@@ -3,8 +3,8 @@
 import sys
 sys.path.append("..")
 import unittest
-from MJRGCM import GCM
-from MJRAES import AES
+from details.MJRGCM import GCM
+from details.MJRAES import AES
 
 class GCM_test(unittest.TestCase):
     '''TestCase for MJRAES'''
