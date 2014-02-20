@@ -22,8 +22,8 @@ class CTRDRBG(object):
             input_string + b'\x80')
         
         # step 5
-        if (len(S) % self.outlen):
-            S += b'\x00' * (self.outlen - (len(S) % self.outlen))
+        if (len(S) % self._outlen):
+            S += b'\x00' * (self._outlen - (len(S) % self._outlen))
             
         # step 6
         temp = bytearray(b'')
@@ -32,18 +32,18 @@ class CTRDRBG(object):
         
         # Step 8
         K = (b'\x00\x01\x02\x03\x04\05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f' +
-             b'\x10\x11\x12\x13\x14\05\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')[0:self.keylen]
+             b'\x10\x11\x12\x13\x14\05\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')[0:self._keylen]
              
         # Step 9
-        while (len(temp) < (self.keylen + self.outlen)):
-            IV = i.to_bytes(4, byteorder='big') + (b'\x00' * (self.outlen - 4))
+        while (len(temp) < self._seedlen):
+            IV = i.to_bytes(4, byteorder='big') + (b'\x00' * (self._outlen - 4))
             temp += self.__BCC(K, IV + S)
             i += 1
             
         # Step 10
-        K = temp[0:self.keylen]
+        K = temp[0:self._keylen]
         # Step 11
-        X = temp[self.keylen:self.keylen+self.outlen]
+        X = temp[self._keylen:self._keylen+self._outlen]
         # step 12
         temp = bytearray(b'')
     
@@ -59,16 +59,16 @@ class CTRDRBG(object):
         As far as I can tell, this is identical to CBC-MAC'''
         
         # Step 1
-        chaining_value = b'\x00' * self.outlen
+        chaining_value = b'\x00' * self._outlen
         # Step 2
-        n = len(data) // self.outlen
+        n = len(data) // self._outlen
     
         # Step 4
         for i in range(n):
             # Step 3
-            block = data[self.outlen * i:self.outlen*(i+1)]
+            block = data[self._outlen * i:self._outlen*(i+1)]
             # Step 4.1
-            input_block = bytes([block[i] ^ chaining_value[i] for i in range(self.outlen)])
+            input_block = bytes([block[i] ^ chaining_value[i] for i in range(self._outlen)])
             # Step 4.2
             chaining_value = self.__Block_Encrypt(key, input_block)
         return chaining_value
@@ -77,3 +77,37 @@ class CTRDRBG(object):
         '''Section 10.4.3: Returns the encryption of a single block of data,
         by the underlying cipher with the specified key'''
         return self._cipher(key)._encrypt(data)            
+    
+    def __Update(self, provided_data):
+        '''CTR_DRBG_Update, section 10.2.1.2'''
+        
+        if len(provided_data) != self._seedlen:
+            raise ValueError("length of provided data must equal seedlen")
+        
+        # Step 1
+        temp = bytearray()
+        # Step 2
+        while (len(temp) < (self._seedlen)):
+            # Step 2.1
+            CTRDRBG._array_increment(self.__V)
+            # Step 2.2
+            output_block = self.__Block_Encrypt(self.__key, self.__V)
+            # Step 2.3
+            temp += output_block
+        # Step 3
+        temp = temp[0:self._seedlen]
+        # Step 4
+        for i in range(len(temp)):
+            temp[i] ^= provided_data[i]
+        # Step 5
+        self.__key = temp[0:self._keylen]
+        # Step 6
+        self.__V = temp[self._keylen:]
+        
+            
+    @staticmethod
+    def _array_increment(arr):
+        for i in range(len(arr)-1, -1, -1):
+            arr[i] = (arr[i] + 1)%0xff
+            if (arr[i] != 0):
+                break
