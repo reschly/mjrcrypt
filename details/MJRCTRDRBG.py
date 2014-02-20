@@ -156,3 +156,10 @@ class CTRDRBG(object):
             arr[i] = (arr[i] + 1)%0xff
             if (arr[i] != 0):
                 break
+            
+    def __init__(self, cipher, keylen):
+        self._cipher = cipher
+        self._keylen = keylen
+        self._outlen = cipher._blocksize
+        self._seedlen = self._keylen + self._outlen
+        self._reseed_interval = (1 << 48) # See Sectino 10.2, Table 3

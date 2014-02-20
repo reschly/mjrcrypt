@@ -7,6 +7,9 @@ class AES(object):
     only mode that is planned to be supported is GCM
     mode, which does not require the Decryption routine'''
 
+    # blocksize
+    _blocksize = 16
+
     # bytes of key : number of rounds
     # FIPS 197 section 5
     __numrounds = {16 : 10, 24 : 12, 32 : 14}
