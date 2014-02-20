@@ -49,8 +49,7 @@ class CTRDRBG(object):
     
         # step 13:
         while (len(temp) < num_bytes):
-            X = self.__Block_Encrypt(K, X)
-            temp += X
+            temp += self.__Block_Encrypt(K, X)
         
         return temp[0:num_bytes]
     
@@ -90,10 +89,8 @@ class CTRDRBG(object):
         while (len(temp) < (self._seedlen)):
             # Step 2.1
             CTRDRBG._array_increment(self.__V)
-            # Step 2.2
-            output_block = self.__Block_Encrypt(self.__key, self.__V)
-            # Step 2.3
-            temp += output_block
+            # Step 2.2, 2.3
+            temp += self.__Block_Encrypt(self.__key, self.__V)
         # Step 3
         temp = temp[0:self._seedlen]
         # Step 4
@@ -104,6 +101,54 @@ class CTRDRBG(object):
         # Step 6
         self.__V = temp[self._keylen:]
         
+    def __Instantiate(self, entropy, nonce, personalization):
+        '''Instantiate with Derivation Function, section 10.2.1.3.2'''
+        
+        # Step 1
+        seed_material = entropy + nonce + personalization
+        # Step 2
+        seed_material = self.__df(seed_material, self._seedlen)
+        # Step 3
+        self.__key = b'\x00' * self._keylen
+        self.__V  = bytearray(b'\x00' * self._outlen)
+        self.__Update(seed_material)
+        self._reseed_counter = 1
+        
+    def __Reseed(self, entropy, additional_input):
+        '''Reseed with Derivation Function, section 10.2.1.4.2'''
+        
+        # Step 1
+        seed_material = entropy + additional_input
+        # Step 2
+        seed_material = self.__df(seed_material, self._seedlen)
+        # Step 3
+        self.__Update(seed_material)
+        self._reseed_counter = 1
+        
+    def __Generate(self, number_of_bytes, additional_input):
+        '''Generate with Derivation Function, section 10.2.1.5.2'''
+        
+        # Step 1
+        if (self._reseed_counter > self._reseed_interval):
+            raise AssertionError("Reseed required")
+        # Step 2
+        if (additional_input != None) and (len(additional_input) != 0):
+            additional_input = self.__df(additional_input)
+            self.__Update()
+        else:
+            additional_input = b'\x00' * self._seedlen
+        # Step 3
+        temp = bytearray()
+        # Step 4
+        while (len(temp) < number_of_bytes):
+            CTRDRBG._array_increment(self.__V)
+            temp += self.__Block_Encrypt(self.__key, self.__V)
+        # step 6
+        self.__Update(additional_input)
+        # step 7
+        self._reseed_counter += 1
+        # Step 5, 8
+        return temp[0:number_of_bytes]
             
     @staticmethod
     def _array_increment(arr):
