@@ -153,7 +153,7 @@ class CTRDRBG(object):
     @staticmethod
     def _array_increment(arr):
         for i in range(len(arr)-1, -1, -1):
-            arr[i] = (arr[i] + 1)%0xff
+            arr[i] = (arr[i] + 1)&0xff
             if (arr[i] != 0):
                 break
             
