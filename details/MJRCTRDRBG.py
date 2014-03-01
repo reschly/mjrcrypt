@@ -49,7 +49,8 @@ class CTRDRBG(object):
     
         # step 13:
         while (len(temp) < num_bytes):
-            temp += self.__Block_Encrypt(K, X)
+            X = self.__Block_Encrypt(K, X)
+            temp += X
         
         return temp[0:num_bytes]
     
@@ -75,7 +76,9 @@ class CTRDRBG(object):
     def __Block_Encrypt(self, key, data):
         '''Section 10.4.3: Returns the encryption of a single block of data,
         by the underlying cipher with the specified key'''
-        return self._cipher(key)._encrypt(data)            
+        out = bytearray(b'\x00' * self._outlen)
+        self._cipher(key)._encrypt(data, out)
+        return out
     
     def __Update(self, provided_data):
         '''CTR_DRBG_Update, section 10.2.1.2'''
@@ -110,8 +113,11 @@ class CTRDRBG(object):
         seed_material = self.__df(seed_material, self._seedlen)
         # Step 3
         self.__key = b'\x00' * self._keylen
+        # Step 4
         self.__V  = bytearray(b'\x00' * self._outlen)
+        # Step 5
         self.__Update(seed_material)
+        # Step 6
         self._reseed_counter = 1
         
     def __Reseed(self, entropy, additional_input):
