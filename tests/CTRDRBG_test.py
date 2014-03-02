@@ -5,6 +5,7 @@ sys.path.append("..")
 import unittest
 from details.MJRCTRDRBG import CTRDRBG
 from details.MJRAES import AES
+from binascii import unhexlify
 
 
 class CTRDRBG_test(unittest.TestCase):
@@ -36,33 +37,74 @@ class CTRDRBG_test(unittest.TestCase):
     def test_aes128_df(self):
         '''Test aes128-ctr-drbg with derivation function'''
         drbg = CTRDRBG(AES, 16)
-        entropy_input = b'\x0f\x65\xda\x13\xdc\xa4\x07\x99\x9d\x47\x73\xc2\xb4\xa1\x1d\x85'
-        nonce = b'\x52\x09\xe5\xb4\xed\x82\xa2\x34'
+        entropy_input = b'0f65da13dca407999d4773c2b4a11d85'
+        nonce = b'5209e5b4ed82a234'
         personalization_string = b''
-        additional_input = b''
+        additional_input1 = b''
+        additional_input2 = b''
+        expected_key1 = b'0c42ea6804303954deb197a07e6dbdd2'
+        expected_V1 = b'80941680713df715056fb2a3d2e998b2'
+        reseed_entropy = b'1dea0a12c52bf64339dd291c80d8ca89'
+        reseed_additional_input = b''
+        expected_key2 = b'32fbfd0109f364ed21ef21a6e5c763e7'
+        expected_V2 = b'f2bacbb233252fba35fb0582f9286179'
+        expected_key3 = b'757c8eb766f9aaa4650d6500b58624a3'
+        expected_V3 = b'99003d630bba500fe17c37f8c7331bf6'
+        expected_bits = b'2859cc468a76b08661ffd23b28547ffd0997ad526a0f51261b99ed3a37bd407bf418dbe6c6c3e26ed0ddefcb7474d899bd99f3655427519fc5b4057bcaf306d4'
+        expected_key4 = b'e421ff2445e04992faf36cf9a5eaf1f9'
+        expected_V4 = b'5907ab447a88e5106753507cc97e0fd5'
         
-        drbg._CTRDRBG__Instantiate(entropy_input, nonce, personalization_string)
-        self.assertEqual(b'\x0c\x42\xea\x68\x04\x30\x39\x54\xde\xb1\x97\xa0\x7e\x6d\xbd\xd2', drbg._CTRDRBG__key)
-        self.assertEqual(b'\x80\x94\x16\x80\x71\x3d\xf7\x15\x05\x6f\xb2\xa3\xd2\xe9\x98\xb2', drbg._CTRDRBG__V)
+        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
+                
+        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        entropy_input = b'\x1d\xea\x0a\x12\xc5\x2b\xf6\x43\x39\xdd\x29\x1c\x80\xd8\xca\x89'
+        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Reseed(entropy_input, additional_input)
-        self.assertEqual(b'\x32\xfb\xfd\x01\x09\xf3\x64\xed\x21\xef\x21\xa6\xe5\xc7\x63\xe7', drbg._CTRDRBG__key)
-        self.assertEqual(b'\xf2\xba\xcb\xb2\x33\x25\x2f\xba\x35\xfb\x05\x82\xf9\x28\x61\x79', drbg._CTRDRBG__V)
-        
-        drbg._CTRDRBG__Generate(64, additional_input)
-        self.assertEqual(b'\x75\x7c\x8e\xb7\x66\xf9\xaa\xa4\x65\x0d\x65\x00\xb5\x86\x24\xa3', drbg._CTRDRBG__key)
-        self.assertEqual(b'\x99\x00\x3d\x63\x0b\xba\x50\x0f\xe1\x7c\x37\xf8\xc7\x33\x1b\xf6', drbg._CTRDRBG__V)
-        
-        returned_bits = drbg._CTRDRBG__Generate(64, additional_input)
-        expected = (b'\x28\x59\xcc\x46\x8a\x76\xb0\x86\x61\xff\xd2\x3b\x28\x54\x7f\xfd\x09\x97\xad\x52\x6a\x0f' +
-                    b'\x51\x26\x1b\x99\xed\x3a\x37\xbd\x40\x7b\xf4\x18\xdb\xe6\xc6\xc3\xe2\x6e\xd0\xdd\xef\xcb' +
-                    b'\x74\x74\xd8\x99\xbd\x99\xf3\x65\x54\x27\x51\x9f\xc5\xb4\x05\x7b\xca\xf3\x06\xd4')
-        self.assertEqual(returned_bits, expected)
-        self.assertEqual(b'\xe4\x21\xff\x24\x45\xe0\x49\x92\xfa\xf3\x6c\xf9\xa5\xea\xf1\xf9', drbg._CTRDRBG__key)
-        self.assertEqual(b'\x59\x07\xab\x44\x7a\x88\xe5\x10\x67\x53\x50\x7c\xc9\x7e\x0f\xd5', drbg._CTRDRBG__V)
+        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        self.assertEqual(unhexlify(expected_bits), returned_bits)
+        self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
 
+        drbg = CTRDRBG(AES, 16)
+        entropy_input = b'070d59639873a5452738227b7685d1a9'
+        nonce = b'74181f3c22f64920'
+        personalization_string = b'4e6179d4c272a14cf13df65ea3a6e50f'
+        additional_input1 = b''
+        additional_input2 = b''
+        expected_key1 = b'32a76abdc2d8fc1143edd742d0fae60a'
+        expected_V1 = b'4e8e758d22f36d10e598d4ae68a828b7'
+        reseed_entropy = b'4a47c2f38516b46f002e71daed169b5c'
+        reseed_additional_input = b''
+        expected_key2 = b'ca51adea091be6972644c4aa1be16aca'
+        expected_V2 = b'847dcefd0abc31b0f5b0cfa7e377349e'
+        expected_key3 = b'1e4bf36111637d53f022f7959fe8c971'
+        expected_V3 = b'074e82340d41b6fec662ce9b591f6ccb'
+        expected_bits = b'31c99109f8c510133cd396f9bc2c12c07cc1615fa30999afd7f236fd401a8bf23338ee1d035f83b7a253dcee18fca7f2ee96c6c2cd0cff02767069aa69d13be8'
+        expected_key4 = b'884d79cf24be82e60dce9bcdf327f207'
+        expected_V4 = b'4b45ad20c126e38664e4f34b5a5b0c2e'
 
+        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
+                
+        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
+        
+        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
+        
+        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        self.assertEqual(unhexlify(expected_bits), returned_bits)
+        self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
+        
 if __name__ == "__main__":
     unittest.main()
