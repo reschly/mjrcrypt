@@ -272,7 +272,7 @@ class AES(object):
         key: raw aes key, as a (16, 24, or 32)-byte array
         '''
         assert len(key) in [16, 24, 32], \
-            "Bad key size: %s.  Must be 16, 24, or 32 bytes." % len(key)
+            "Bad key size: " + str(len(key)) + ".  Must be 16, 24, or 32 bytes."
         self.__roundkeys = [bytearray(16)
                             for i in range(AES.__numrounds[len(key)]+1)]
         self.__state = [bytearray(4) for i in range(4)]

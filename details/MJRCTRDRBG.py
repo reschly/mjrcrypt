@@ -139,8 +139,8 @@ class CTRDRBG(object):
             raise AssertionError("Reseed required")
         # Step 2
         if (additional_input != None) and (len(additional_input) != 0):
-            additional_input = self.__df(additional_input)
-            self.__Update()
+            additional_input = self.__df(additional_input, self._seedlen)
+            self.__Update(additional_input)
         else:
             additional_input = b'\x00' * self._seedlen
         # Step 3
@@ -168,4 +168,4 @@ class CTRDRBG(object):
         self._keylen = keylen
         self._outlen = cipher._blocksize
         self._seedlen = self._keylen + self._outlen
-        self._reseed_interval = (1 << 48) # See Sectino 10.2, Table 3
+        self._reseed_interval = (1 << 48) # See Section 10.2, Table 3
