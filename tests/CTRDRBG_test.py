@@ -599,6 +599,44 @@ class CTRDRBG_test(unittest.TestCase):
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
 
+    def test_aes256_df(self):
+        '''Test aes256-ctr-drbg with derivation function'''
+        drbg = CTRDRBG(AES, 32)
+        entropy_input = b'2d4c9f46b981c6a0b2b5d8c69391e569ff13851437ebc0fc00d616340252fed5'
+        nonce = b'0bf814b411f65ec4866be1abb59d3c32'
+        personalization_string = b''
+        expected_key1 = b'd64160c3e965f377caef625c7eb21dd37728bcf84bfc23b92e267611feaffda8'
+        expected_V1 = b'446ce986bd722ad1a514ebb7d274ec99'
+        reseed_entropy = b'93500fae4fa32b86033b7a7bac9d37e710dcc67ca266bc8607d665937766d207'
+        reseed_additional_input = b''
+        expected_key2 = b'50d9feb33fc77303b83232b7deded04f1bfa4afaa937712f88458d6b64c046c5'
+        expected_V2 = b'0b8e38a54036f1ba80a2880d4f17bb09'
+        additional_input1 = b''
+        expected_key3 = b'a2203a6f082ecdc0cd38f0b3b19f1a8cd6a5f110a13bb488c1e70f9f95a93024'
+        expected_V3 = b'84b0a849c5459e27fe7f8c5db26fa13d'
+        additional_input2 = b''
+        expected_bits = b'322dd28670e75c0ea638f3cb68d6a9d6e50ddfd052b772a7b1d78263a7b8978b6740c2b65a9550c3a76325866fa97e16d74006bc96f26249b9f0a90d076f08e5'
+        expected_key4 = b'de721178a341a85eb54a2f7e2b3cd4bcc201417e739eb183fa958f9af8535b2c'
+        expected_V4 = b'de67dd5f9a431fc46dd1825cd1a2bff3'
+
+        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
+                
+        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
+        
+        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
+        
+        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        self.assertEqual(unhexlify(expected_bits), returned_bits)
+        self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
+
+
         
 if __name__ == "__main__":
     unittest.main()

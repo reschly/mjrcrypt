@@ -1,6 +1,5 @@
 '''My CTR-DRBG module Module'''
 
-
 class CTRDRBG(object):
     '''
     An implementation of CTR-DRBG from NIST SP 800-90A (Jan 2012 edition)
@@ -31,8 +30,8 @@ class CTRDRBG(object):
         i = 0
         
         # Step 8
-        K = (b'\x00\x01\x02\x03\x04\05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f' +
-             b'\x10\x11\x12\x13\x14\05\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')[0:self._keylen]
+        K = (b'\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f' +
+             b'\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')[0:self._keylen]
              
         # Step 9
         while (len(temp) < self._seedlen):
@@ -43,7 +42,7 @@ class CTRDRBG(object):
         # Step 10
         K = temp[0:self._keylen]
         # Step 11
-        X = temp[self._keylen:self._keylen+self._outlen]
+        X = temp[self._keylen:self._seedlen]
         # step 12
         temp = bytearray(b'')
     
@@ -66,9 +65,9 @@ class CTRDRBG(object):
         # Step 4
         for i in range(n):
             # Step 3
-            block = data[self._outlen * i:self._outlen*(i+1)]
+            block = data[self._outlen*i : self._outlen*(i+1)]
             # Step 4.1
-            input_block = bytes([block[i] ^ chaining_value[i] for i in range(self._outlen)])
+            input_block = bytes([block[j] ^ chaining_value[j] for j in range(self._outlen)])
             # Step 4.2
             chaining_value = self.__Block_Encrypt(key, input_block)
         return chaining_value
