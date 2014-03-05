@@ -54,19 +54,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'e421ff2445e04992faf36cf9a5eaf1f9'
         expected_V4 = b'5907ab447a88e5106753507cc97e0fd5'
         
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -89,19 +89,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'884d79cf24be82e60dce9bcdf327f207'
         expected_V4 = b'4b45ad20c126e38664e4f34b5a5b0c2e'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -124,19 +124,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'e68df737b3c0edfb66a9e357121c85ae'
         expected_V4 = b'd81e79df9064de25368697716c01b7fa'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -159,19 +159,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'ecf5b5ebce3665a01db39994b45b3719'
         expected_V4 = b'0b126334b7a8f75fbfdd72e492083e20'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -194,19 +194,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'3d103fc0f1ca3a4e62ae4b65fe369fdc'
         expected_V4 = b'3e01f9dbbb380f7d7f0f916d98ce087b'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -229,19 +229,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'cd23de3390f9f5749eddc2b5b3ed3745'
         expected_V4 = b'60d5a70c749938bb5890ab88209338c7'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -264,19 +264,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'11d3476dd8db5193be4c6f39f0492fb7'
         expected_V4 = b'11f3f91a8635f8e42268b5b5280289ea'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -299,19 +299,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'4dc24b8068d75b8b3675793c3cb9c994'
         expected_V4 = b'596dc51e5a926ddbb3249489dc260af7'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -334,19 +334,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'2af7529a51ea7e0e281bebed3c44a706'
         expected_V4 = b'9495474f5654b545544d0824c4023df2'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -369,19 +369,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'7b2385314488218c599cf9c7289a4ec0'
         expected_V4 = b'44fd19d0fecb38c817a625f0b82ae00d'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -404,19 +404,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'65f9613aeed126e45a99396e5b9b81fa'
         expected_V4 = b'006726b9af0324b60edf1fc485662b22'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -439,19 +439,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'8f9802dbf93eb8a01fc9c5910a38bbc9'
         expected_V4 = b'31530077ae8880888f09459739be67d0'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -474,19 +474,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'9e280dde976c775933c1d47e74d15cb1'
         expected_V4 = b'85896b908f3d63b7ff5853143f652f7d'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -509,19 +509,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'de7cd3939522a9d6e7feaebeef43308d'
         expected_V4 = b'7c43329416dd9bb9c9e376c4c05e16ab'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -544,19 +544,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'ad3921ed4d1f3cf485ebb0b0df89ab96'
         expected_V4 = b'5bcd6bafd744a764eb10c6034ea381d2'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -582,19 +582,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'1f5e987ac2259b7072867e4ae59167094d0162111062f6f8'
         expected_V4 = b'84f344f8277841e920464ca475b10276'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -617,19 +617,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'5dec9ad1f5f3d0e7bb59ae581097a3f616e443e4f5bd804a'
         expected_V4 = b'1cf82a0638c421bb43401943498d0f88'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -652,19 +652,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'4daf44235f486b895251f0cfd83af4ddd16df913dde039cb'
         expected_V4 = b'a44c4ceb53c82f65d6b4bbb9ed157e4c'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -687,19 +687,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'607900261bf8088caf189ee144a8b79cfe3503d47245e7ea'
         expected_V4 = b'e8654266617de1e197e522fdd8c297ad'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -723,19 +723,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'6b282d7d6989f7892f44551f8110b2575f1c18301cb0bb48'
         expected_V4 = b'd5a4cb9286847f5b2054d4b7a24cc597'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -758,19 +758,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'50e8507526506e55a370a29d74bca06be7ed646422d2573d'
         expected_V4 = b'37b5fc94b0993888ed2dcd075afeb8a8'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -794,19 +794,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'5d95380f26b49dde8ba131dbb1891d7d09b478858336d201'
         expected_V4 = b'c33bb1ea34b7ba23c4698c17ef71533d'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -830,19 +830,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'9831c9c5ad73bf8aac03400c35c3a81acc97143f73b97116'
         expected_V4 = b'd17f89705ebb02a625131c246a3d209e'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -866,19 +866,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'4c0288a89e2eb41469143c315ebb6ba9813c535d126afa83'
         expected_V4 = b'fb257fad47a053d21d03b36bc95b6d9b'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -905,19 +905,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'de721178a341a85eb54a2f7e2b3cd4bcc201417e739eb183fa958f9af8535b2c'
         expected_V4 = b'de67dd5f9a431fc46dd1825cd1a2bff3'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -941,19 +941,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'770600434fe0af64e045f5530e2b9732da9e3b4c3af342994a4f1f7ee5c4144e'
         expected_V4 = b'a9729f842063b9464e74018c0ab30df3'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -976,19 +976,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'af19f197191b229dbbd2c9ba8e38538e00ea59d52181fec6574998fcd2476478'
         expected_V4 = b'8c91ebe5697151aa97f3d04654db5131'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -1012,19 +1012,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'4e558b0df4e7427d7fdc8b8cef4c19021a831506d93c92f7394349d6081673c8'
         expected_V4 = b'128cd27a8721f1e7dbb1f982bc6146e5'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -1048,19 +1048,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'f232ba128666c6eddc169def395c9fc634206ef534f8c139f4d0f4fdf9d657a5'
         expected_V4 = b'2875b7691dd63fdca83f726006b48638'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -1084,19 +1084,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'3bae369fc4e2e59d6b7b0b83359da33ab36a4c11611e215dcb06b2dac99e9fb0'
         expected_V4 = b'5bdd5280b24a68df396dc3590861257f'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -1119,19 +1119,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'a2d85338ed69bf372a6886473307c1b9858cdc475ca5825ee39d3c1eb3073915'
         expected_V4 = b'6e49d379731c5cf5543b62a7cc041eec'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -1155,19 +1155,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'aa848b22bdf2dc7be73ed3cf165336bf312866cc3983d36ba8dc387be62ad64f'
         expected_V4 = b'72a3270ba3147a60a68ee688ccc048df'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -1191,19 +1191,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'4aaaefc2f3a240c4a182d854d5a610148311a9f3801c562098db2aeaf0769ae5'
         expected_V4 = b'56a0100e0359dd990b7eaef48a93315e'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -1227,19 +1227,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'39e81cafe867ba799d197dbf2b7ff6c1f6e949a866039d820b41cf3472a988d4'
         expected_V4 = b'a7f4f09c173d3ccd73a8adc3c8ea272f'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -1263,19 +1263,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'46f4a47c0af8792f5143fbf9e4f7705cfac03f11dcdeb16ed4ab95984878718a'
         expected_V4 = b'effd45c572161a9a4cf0be2497250ab0'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -1299,19 +1299,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'9cab20432c12fdd589192ca9078010dd7f2548d13476154f90277d08807c3d40'
         expected_V4 = b'8ad9ae989097d5a99931265533fe7253'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -1335,19 +1335,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'99caa9f7a7968668932013426c1b3460a4645fe98ef4a549601b375facf0dbba'
         expected_V4 = b'5b54e18570984267cd3f71cf87c02b4b'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -1371,19 +1371,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'f3496f0b9e090a52d822f2db2f73e621d353762b65b2ed16558c5036bacdf0f8'
         expected_V4 = b'52654a64f0e98464fc3037f7348313fc'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -1407,19 +1407,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'52a9a4cab12e2f8e2094fabafb1cf078f086700d8d98dd679a767733635c8a33'
         expected_V4 = b'e2173d3edc0dd3ec91a1bd74a1fa9d48'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
@@ -1443,19 +1443,19 @@ class CTRDRBG_test(unittest.TestCase):
         expected_key4 = b'2ac85be48c4b86fea6a3c6826c3d495f03bf4a273a038578b78c3e642a5431e4'
         expected_V4 = b'57bc95505c2b95d293e628127ca2cb16'
 
-        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        drbg._Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
         self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
                 
-        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        drbg._Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
         self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
         
-        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        drbg._Generate(64, unhexlify(additional_input1))
         self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
         
-        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        returned_bits = drbg._Generate(64, unhexlify(additional_input2))
         self.assertEqual(unhexlify(expected_bits), returned_bits)
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)

@@ -15,15 +15,15 @@ class Random(object):
         '''
         self.__drbg = CTRDRBG(cipher, keysize)
         if (seed is None) or (len(seed) == 0):
-            seed = Random.__self_seed(1024)
+            seed = Random.__generate_seed(1024)
         
         microseconds = round(time() * 1000000)
-        nonce = int.to_bytes(12, microseconds, byteorder='big')
+        nonce = microseconds.to_bytes(12, byteorder='big')
         personalization = b'MJR CTR-DRBG'
-        self.drbg._CTRDRBG__Instantiate(seed, nonce, personalization)
+        self.__drbg._Instantiate(seed, nonce, personalization)
     
     @staticmethod
-    def __self_seed(numbytes):
+    def __generate_seed(numbytes):
         '''Generates a default seed
         Uses urandom because otherwise @tqbf will
         complain'''
@@ -31,9 +31,9 @@ class Random(object):
     
     def get_bytes(self, numbytes):
         try:
-            rand = self.drbg._CTRDRBG__Generate(numbytes, None)
+            rand = self.__drbg._Generate(numbytes, None)
         except AssertionError:
             # resseed required
-            self._drbg._CTRDRBG__Reseed(self.__self_seed(1024), None)
-            rand = self.drbg._CTRDRBG__Generate(numbytes, None)
+            self.__drbg._Reseed(self.__generate_seed(1024), None)
+            rand = self.__drbg._Generate(numbytes, None)
         return rand

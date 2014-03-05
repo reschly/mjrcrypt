@@ -103,7 +103,7 @@ class CTRDRBG(object):
         # Step 6
         self.__V = temp[self._keylen:]
         
-    def __Instantiate(self, entropy, nonce, personalization):
+    def _Instantiate(self, entropy, nonce, personalization):
         '''Instantiate with Derivation Function, section 10.2.1.3.2'''
         
         # Step 1
@@ -119,7 +119,7 @@ class CTRDRBG(object):
         # Step 6
         self._reseed_counter = 1
         
-    def __Reseed(self, entropy, additional_input):
+    def _Reseed(self, entropy, additional_input):
         '''Reseed with Derivation Function, section 10.2.1.4.2'''
         
         # Step 1
@@ -130,7 +130,7 @@ class CTRDRBG(object):
         self.__Update(seed_material)
         self._reseed_counter = 1
         
-    def __Generate(self, number_of_bytes, additional_input):
+    def _Generate(self, number_of_bytes, additional_input):
         '''Generate with Derivation Function, section 10.2.1.5.2'''
         
         # Step 1
