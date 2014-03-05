@@ -599,6 +599,292 @@ class CTRDRBG_test(unittest.TestCase):
         self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
         self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
 
+        drbg = CTRDRBG(AES, 24)
+        entropy_input = b'3a09c9cc5e01f152ea2ed3021d49b4d6386aa6f04521ebde'
+        nonce = b'490bd4ee628cf9615035543e70fce4e2'
+        personalization_string = b''
+        expected_key1 = b'a4283dc9450ac97bf22c387082e3816728243473cedaa2af'
+        expected_V1 = b'59a45ccbc3864f79b896c30d4a231d46'
+        reseed_entropy = b'df06e5668d41a6fa7660aef477eff7a0ffc0542c1cd406d5'
+        reseed_additional_input = b'59b8c26626aab69e462752722f19450d12e2c0e959882d4d06ef4177e396855d'
+        expected_key2 = b'9c4d7784fe341619e21f2535d404866df3b75e9a7940d471'
+        expected_V2 = b'5857d49a1552923931926dca1682fbc2'
+        additional_input1 = b'28e57a9128e479985cce391e98127fd126f37ad0f317fd5f97b8c18e762f360b'
+        expected_key3 = b'6a8fddde995255f89ea3c9454cc481045ff0e16ce5a34693'
+        expected_V3 = b'bb8ed7bcbe1203be861b8e6570fe116b'
+        additional_input2 = b'd488672b52e867816178369f542190685bbe8672720c1943d8a4378cc9b9dd0c'
+        expected_bits = b'5c233e2850e4981bab0f6513a76ca2c9f9f97b89b7fedd3d9aaffecf305d89fd5306cf24715895ad9ba7dac8c389fd87f95b4973003150871fa281e962f270cb'
+        expected_key4 = b'5dec9ad1f5f3d0e7bb59ae581097a3f616e443e4f5bd804a'
+        expected_V4 = b'1cf82a0638c421bb43401943498d0f88'
+
+        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
+                
+        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
+        
+        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
+        
+        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        self.assertEqual(unhexlify(expected_bits), returned_bits)
+        self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
+
+        drbg = CTRDRBG(AES, 24)
+        entropy_input = b'35811473d105a6ae332bf72aa98a443ba97da55badb2e3c3'
+        nonce = b'385bd442b5b7210c2d66109f88ac1ed1'
+        personalization_string = b'16ed4ee59401550c67cdab99620257e54cfc7aa312c6814f81352123e4a28f11'
+        expected_key1 = b'156ec65bfa898955b50c1382560ceeb381032106f33e54fd'
+        expected_V1 = b'647843cb184a5b6cf7f20bbfce36fa08'
+        reseed_entropy = b'a835e0140b52ae14df3343b65b110192baafd17ec2bcb10a'
+        reseed_additional_input = b''
+        expected_key2 = b'8b68106fb5f98280e6dd01769a85e4a2ac520df6c365a4b5'
+        expected_V2 = b'bfbe10d329dd00466bff445cb61b00af'
+        additional_input1 = b''
+        expected_key3 = b'14b7cde98f88f8ee4e0f0a384a6c67f8229fd83621cf4641'
+        expected_V3 = b'0cdc96325f2e28d2bf5ffb95476873c3'
+        additional_input2 = b''
+        expected_bits = b'4b8afb7c20bf941db7fb2cac02b46a45313334c04034b7e411b3607e19fc921dca47f19c5877e92086547cc6f1158ca4cfd62001f7e0f3af8a62e3c9888bf9ad'
+        expected_key4 = b'4daf44235f486b895251f0cfd83af4ddd16df913dde039cb'
+        expected_V4 = b'a44c4ceb53c82f65d6b4bbb9ed157e4c'
+
+        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
+                
+        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
+        
+        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
+        
+        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        self.assertEqual(unhexlify(expected_bits), returned_bits)
+        self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
+
+        drbg = CTRDRBG(AES, 24)
+        entropy_input = b'c4b1e6a99587eacd7ec8517f40f9433ca432cea8686433f0'
+        nonce = b'd03a29e548e58ca7cbf0ac707b1464e3'
+        personalization_string = b'0daaead21779b2a428d2b7fb12d9ab8316899edbe26b5460de1549c99e4781c9'
+        expected_key1 = b'4ca21c47704c6a86cb6fafa1b77e14b860b76e53c18ee305'
+        expected_V1 = b'e037477b43c7f08b53191f332e2365fa'
+        reseed_entropy = b'2229144c1b4efb79ab5fe079cda26bc33acbb2a0a87f642c'
+        reseed_additional_input = b'f116a683ca485fda846a598b8d9b079e78c2828286ad530bf01f693cc8af9f84'
+        expected_key2 = b'08251c8316ea37fe0c8a4f67979d162ee3047ef8e2b1f4fd'
+        expected_V2 = b'720adaef1786017a67880ca4bc98f9e1'
+        additional_input1 = b'7c89de353298935bd26aa18517355313df0630da5f45ea0240e809179363080b'
+        expected_key3 = b'a8c80c088b7b244df52d413d66c1cfd8920ada71c041175f'
+        expected_V3 = b'301b9d734b7793cf7979fc47b42d949b'
+        additional_input2 = b'e978b8fe56afc908bed129a46d57a8698d66034d4dbcc7aba3a33d5796fb7559'
+        expected_bits = b'8ce7e9589c2975fd6989a450aa65da9114e515777c97351da037ccb72d4987eb69c680411724ed602e6ac76cd2d085725616c92777a4664d43a59c3ae9946134'
+        expected_key4 = b'607900261bf8088caf189ee144a8b79cfe3503d47245e7ea'
+        expected_V4 = b'e8654266617de1e197e522fdd8c297ad'
+
+        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
+                
+        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
+        
+        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
+        
+        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        self.assertEqual(unhexlify(expected_bits), returned_bits)
+        self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
+
+
+        drbg = CTRDRBG(AES, 24)
+        entropy_input = b'ff25661b6b585c5a31217a9b5c20a6e307f70b126fda2e25'
+        nonce = b'1be8f51afebd48145541603df92e5d0d'
+        personalization_string = b''
+        expected_key1 = b'284a29d10393b1da8bc5052a3cc1cc144f26cc96998f9647'
+        expected_V1 = b'3fc3e3e26dd363dad4b14b3146171f72'
+        reseed_entropy = b'29855dfe13480058562d337e16ae0c8753cc4eb5420c8825'
+        reseed_additional_input = b''
+        expected_key2 = b'924f1f5a1eaf0ea25808b02d364758c2e93c437939589901'
+        expected_V2 = b'a3bfb1ad964b08fe8aafd24d72dbe737'
+        additional_input1 = b''
+        expected_key3 = b'f206d02199b5237662ddb2c9949d6c976909f3deb32fbcfb'
+        expected_V3 = b'491f8f2a846c8efd164599e6a55a3c35'
+        additional_input2 = b''
+        expected_bits = b'8607c9d784548f2f37f2616b244e9f27a30092df9424c47b3464862e675f03d4ec6cd5ff79f9f4a5d388a603e7495d39477955460ac2ee0c2ce4d3d834ef5174'
+        expected_key4 = b'6b282d7d6989f7892f44551f8110b2575f1c18301cb0bb48'
+        expected_V4 = b'd5a4cb9286847f5b2054d4b7a24cc597'
+
+        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
+                
+        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
+        
+        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
+        
+        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        self.assertEqual(unhexlify(expected_bits), returned_bits)
+        self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
+
+        drbg = CTRDRBG(AES, 24)
+        entropy_input = b'1a1a4a3bec7bbdf98f53592418d903aed3e114a7f0114563'
+        nonce = b'f0b7b7424f108f6db6cfcbfd2d40a5b6'
+        personalization_string = b''
+        expected_key1 = b'a690e27c59f4777641e82b45e0c1a36a8e1405034dc21789'
+        expected_V1 = b'7919919112554707c26434c4e72cac09'
+        reseed_entropy = b'6f78afb310ee0dae6732e0ed979c63a3ad8792333662f624'
+        reseed_additional_input = b'9f050542a1097f935c68f373824ab9cac17827badbe07cf9dee48af33a31991f'
+        expected_key2 = b'79f5e6ed34311b5a0274cb4888114e268a021bb65b6c1f4a'
+        expected_V2 = b'90c43c6557971a10857379ddd1875d5f'
+        additional_input1 = b'38d68cc7c89866d8d2708a215776af154b3c082d550c555e1aaa5a72ef2f5be0'
+        expected_key3 = b'12c455d7b3e4e97bef488b5d57642cdd09410038a545b573'
+        expected_V3 = b'd233d3a05cf2c0dbb79599df37f2889b'
+        additional_input2 = b'40f8314489c3258dd4b13ba59b7e8f3ec95db00829a2353a08cd758b4989c053'
+        expected_bits = b'15cc0ce77ee55ca4d72b2e75c32887694dcac97f7d261fbe9ee1d09970b7b0313fb318630afa4ac369b9979c22647f60a3799739942d7808d4fbb14f7ac49037'
+        expected_key4 = b'50e8507526506e55a370a29d74bca06be7ed646422d2573d'
+        expected_V4 = b'37b5fc94b0993888ed2dcd075afeb8a8'
+
+        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
+                
+        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
+        
+        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
+        
+        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        self.assertEqual(unhexlify(expected_bits), returned_bits)
+        self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
+
+
+        drbg = CTRDRBG(AES, 24)
+        entropy_input = b'a7118c155d69705519f1a56f3f524efcb32aeb32a98ae81a'
+        nonce = b'0207f3534f118c71cc11f181f5c6fc0f'
+        personalization_string = b'8d11491c83dede012f271c263f8d4246c3efdfdd288710c67e979f4fbbc864cd'
+        expected_key1 = b'600ac5103eb9897ab12a3faacd9a8c5e439a5d0602d282ce'
+        expected_V1 = b'dd90413f1d76411ef712d1e7d406483d'
+        reseed_entropy = b'66abef82f794f35ed94282deef0dfc228ca5ec83257e81d7'
+        reseed_additional_input = b''
+        expected_key2 = b'8a41d687e1a2b94ba7f1596a88cf9a496e52f737c65f6521'
+        expected_V2 = b'2372668b73de781fcc2b5087858bd4d1'
+        additional_input1 = b''
+        expected_key3 = b'fa958850fc65a1615079c4ad7f18eb680f4a1443473d6c4b'
+        expected_V3 = b'7b18c86979a740c177b7ab36b49e0fff'
+        additional_input2 = b''
+        expected_bits = b'5ddd46baf5c6a5e30943c5bda12f5db8ec19c537f1702afea31292b4a9a8d425763a9f92b36f616f4ffdb9160774d8776433b7c05c46fe6f66c403736a044be5'
+        expected_key4 = b'5d95380f26b49dde8ba131dbb1891d7d09b478858336d201'
+        expected_V4 = b'c33bb1ea34b7ba23c4698c17ef71533d'
+
+        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
+                
+        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
+        
+        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
+        
+        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        self.assertEqual(unhexlify(expected_bits), returned_bits)
+        self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
+        
+        
+        drbg = CTRDRBG(AES, 24)
+        entropy_input = b'e89d54f816f802a1256fb9c9c239887ebcf6c64d68557940'
+        nonce = b'4f022171cace97c081df28cf425d0956'
+        personalization_string = b'53cc6834e9fcbb3eca6880a0ae90d3a7760aaf5a1c0d074b092b9f937031a68a'
+        expected_key1 = b'5bb8156417add46aa822b0bb108a7384b52e550a25383299'
+        expected_V1 = b'156582ce38489361bbea46a70f9697c1'
+        reseed_entropy = b'6e5c51ab74c8552c16be257bd1626df3af7926be67b62c0c'
+        reseed_additional_input = b'73972f57c4a3e30a795d8c10ee801ef0f6c8be7f79fffb96b541d322ba7fd9cc'
+        expected_key2 = b'540c133031ba04197135509a37cbe0cc076a651c76d74bd5'
+        expected_V2 = b'4f94da48d690eeba5309df7054cf2cec'
+        additional_input1 = b'ece1b64c51bb97ee3e72c1c7d4caa3a3d48b6410914240ca033f35ed5b898331'
+        expected_key3 = b'8b3da69525d4d105537bcb348597b9cfbaa60348a690e6f0'
+        expected_V3 = b'165f23d6ad1ae2561b906eb39e6616a6'
+        additional_input2 = b'e7d5dabd56f92029a09cf17cd64aaad8ba6b4d72dbfa07003cd4eafd83c170e5'
+        expected_bits = b'b0e03cef0fbbfaec5754a0a2c1b396a7df6e44df6ac0554ae19d77e6fbe4f0136483380cbb81568c1c1f0ae7fc02758d8d1e796866b7a6a6d173ecc016b81f26'
+        expected_key4 = b'9831c9c5ad73bf8aac03400c35c3a81acc97143f73b97116'
+        expected_V4 = b'd17f89705ebb02a625131c246a3d209e'
+
+        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
+                
+        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
+        
+        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
+        
+        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        self.assertEqual(unhexlify(expected_bits), returned_bits)
+        self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
+
+
+        drbg = CTRDRBG(AES, 24)
+        entropy_input = b'8516a8788f6a58ddadedf8175aa289a2bc310c07ef0d0d82'
+        nonce = b'5db7be3e068300b25bd94974475e58f5'
+        personalization_string = b''
+        expected_key1 = b'f487699d74200a488b7f106be3501a955299e0e881ecf084'
+        expected_V1 = b'47d4ccf5a11bd83847083b235b6b8d35'
+        reseed_entropy = b'423b9912e0e6fbef38642c46df7dbaee2197173352f15267'
+        reseed_additional_input = b''
+        expected_key2 = b'ee9e9068247068a35d77e5a432125247a9ad511024d37736'
+        expected_V2 = b'4782bbda7b687afd4ccb20055e27fc4d'
+        additional_input1 = b''
+        expected_key3 = b'0074df18f6bcc0627779b558f1adc3aa6afd93b719c2f66c'
+        expected_V3 = b'7f931c4f50d8e110e98a7599a689521a'
+        additional_input2 = b''
+        expected_bits = b'c612ffdb9ea6e20901e8f58c180dc4d79b9a25bb51ffb75d7b4076f8f6791c232eeaabb2e43f309155e53810ae795eba667124a9f697f6bb356785edd9ff3959'
+        expected_key4 = b'4c0288a89e2eb41469143c315ebb6ba9813c535d126afa83'
+        expected_V4 = b'fb257fad47a053d21d03b36bc95b6d9b'
+
+        drbg._CTRDRBG__Instantiate(unhexlify(entropy_input), unhexlify(nonce), unhexlify(personalization_string))
+        self.assertEqual(unhexlify(expected_key1), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V1), drbg._CTRDRBG__V)
+                
+        drbg._CTRDRBG__Reseed(unhexlify(reseed_entropy), unhexlify(reseed_additional_input))
+        self.assertEqual(unhexlify(expected_key2), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V2), drbg._CTRDRBG__V)
+        
+        drbg._CTRDRBG__Generate(64, unhexlify(additional_input1))
+        self.assertEqual(unhexlify(expected_key3), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V3), drbg._CTRDRBG__V)
+        
+        returned_bits = drbg._CTRDRBG__Generate(64, unhexlify(additional_input2))
+        self.assertEqual(unhexlify(expected_bits), returned_bits)
+        self.assertEqual(unhexlify(expected_key4), drbg._CTRDRBG__key)
+        self.assertEqual(unhexlify(expected_V4), drbg._CTRDRBG__V)
+
+
+
     def test_aes256_df(self):
         '''Test aes256-ctr-drbg with derivation function'''
         drbg = CTRDRBG(AES, 32)
