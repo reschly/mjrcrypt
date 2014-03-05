@@ -9,9 +9,9 @@ This library will include algorithms I like, and won't include any I don't.  Thi
 
 Included:
 * AES-GCM
+* AES-CTR-DRBG
 
 To be included (eventually):
-* AES-CTR-DRBG
 * RSA-PSS
 * RSA-OAEP
 * SHA-256 (384, 512) 
