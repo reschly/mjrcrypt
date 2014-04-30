@@ -18,45 +18,27 @@ class SHA(object):
         '''FIPS 180-4, Section 4.1.2/4.1.3'''
         return (x & y) ^ (x & z) ^ (y & z)
     
-    @staticmethod
-    def _bigsigma0_256(x):
-        '''FIPS 180-4, Section 4.1.2'''
-        return ROTR(x, 2, bitlen=32) ^ ROTR(x, 13, bitlen=32) ^ ROTR(x, 22, bitlen=32)
     
-    @staticmethod
-    def _bigsigma1_256(x):
-        '''FIPS 180-4, Section 4.1.2'''
-        return ROTR(x, 6, bitlen=32) ^ ROTR(x, 11, bitlen=32) ^ ROTR(x, 25, bitlen=32)
+    def _bigsigma(self, x, offsets):
+        '''FIPS 180-4, Section 4.1.2 / 4.1.3'''
+        return (ROTR(x, offsets[0], bitlen = self._bitlength) ^ 
+                ROTR(x, offsets[1], bitlen = self._bitlength) ^ 
+                ROTR(x, offsets[2], bitlen = self._bitlength))
     
-    @staticmethod
-    def _littlesigma0_256(x):
-        '''FIPS 180-4, Section 4.1.2'''
-        return ROTR(x, 7, bitlen=32) ^ ROTR(x, 18, bitlen=32) ^ SHR(x, 3, bitlen=32)
+    # offsets
+    __bigsigmaoffsets_256 = [[2, 13, 22], [6, 11, 25]]
+    __bigsigmaoffsets_512 = [[28, 34, 39], [14, 18, 41]]
+
     
-    @staticmethod
-    def _littlesigma1_256(x):
-        '''FIPS 180-4, Section 4.1.2'''
-        return ROTR(x, 17, bitlen=32) ^ ROTR(x, 19, bitlen=32) ^ SHR(x, 10, bitlen=32)
+    def _littlesigma(self, x, offsets):
+        '''FIPS 180-4, Section 4.1.2 / 4.1.3'''
+        return (ROTR(x, offsets[0][1], bitlen = self._bitlength) ^ 
+                ROTR(x, offsets[0][2], bitlen = self._bitlength) ^ 
+                SHR(x, offsets[0][3]))
+        
+    __littlesigmaoffsets_256 = [[7, 18, 3], [17, 19, 10]]
+    __littlesigmaoffsets_512 = [[1, 8, 7], [19, 61, 6]]
     
-    @staticmethod
-    def _bigsigma0_512(x):
-        '''FIPS 180-4, Section 4.1.2'''
-        return ROTR(x, 28, bitlen=64) ^ ROTR(x, 34, bitlen=64) ^ ROTR(x, 39, bitlen=64)
-    
-    @staticmethod
-    def _bigsigma1_512(x):
-        '''FIPS 180-4, Section 4.1.2'''
-        return ROTR(x, 14, bitlen=64) ^ ROTR(x, 18, bitlen=64) ^ ROTR(x, 41, bitlen=64)
-    
-    @staticmethod
-    def _littlesigma0_512(x):
-        '''FIPS 180-4, Section 4.1.2'''
-        return ROTR(x, 1, bitlen=64) ^ ROTR(x, 8, bitlen=64) ^ SHR(x, 7)
-    
-    @staticmethod
-    def _littlesigma1_512(x):
-        '''FIPS 180-4, Section 4.1.2'''
-        return ROTR(x, 19, bitlen=64) ^ ROTR(x, 61, bitlen=64) ^ SHR(x, 6)    
     
     # SHA-256 constants, FIPS 180-4 Section 4.2.2
     __K256 = [0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
