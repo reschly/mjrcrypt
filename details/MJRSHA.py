@@ -24,22 +24,17 @@ class SHA(object):
         return (ROTR(x, offsets[0], bitlen = self._bitlength) ^ 
                 ROTR(x, offsets[1], bitlen = self._bitlength) ^ 
                 ROTR(x, offsets[2], bitlen = self._bitlength))
-    
-    # offsets
-    __bigsigmaoffsets_256 = [[2, 13, 22], [6, 11, 25]]
-    __bigsigmaoffsets_384 = [[28, 34, 39], [14, 18, 41]]
-    __bigsigmaoffsets_512 = __bigsigmaoffsets_384
 
-    
     def _littlesigma(self, x, offsets):
         '''FIPS 180-4, Section 4.1.2 / 4.1.3'''
         return (ROTR(x, offsets[0][1], bitlen = self._bitlength) ^ 
                 ROTR(x, offsets[0][2], bitlen = self._bitlength) ^ 
                 SHR(x, offsets[0][3]))
         
-    __littlesigmaoffsets_256 = [[7, 18, 3], [17, 19, 10]]
-    __littlesigmaoffsets_384 = [[1, 8, 7], [19, 61, 6]]
-    __littlesigmaoffsets_512 = __littlesigmaoffsets_384
+    # offsets
+    __sigmaoffsets_256 = [[2, 13, 22], [6, 11, 25], [7, 18, 3], [17, 19, 10]]
+    __sigmaoffsets_384 = [[28, 34, 39], [14, 18, 41], [1, 8, 7], [19, 61, 6]]
+    __sigmaoffsets_512 = __sigmaoffsets_384
     
     # SHA-256 constants, FIPS 180-4 Section 4.2.2
     __K256 = [0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
@@ -76,7 +71,7 @@ class SHA(object):
     # SHA-512 constants FIPS 180-4 Section 4.2.3 (same as SHA-384 constants)
     __K512 = __K384
     
-    def _create_padding(self):
+    def _add_padding(self):
         # Creates a padding string for a SHA message.  See FIPS 180-4 Section 5.1
 
         # size of the last block prior to length value
@@ -91,7 +86,7 @@ class SHA(object):
         # padding = 0x80 + zeroes + length
         padding = b'\x80' + b'\x00' * (zero_bytes) + (self._length*8).to_bytes(length_size, order='big')
         
-        return padding
+        self.__current_block += padding
     
     # Initial H values for SHA-256, FIPS 180-4 Section 5.3.3
     __initial_h_256 = [0x6a09e667,
