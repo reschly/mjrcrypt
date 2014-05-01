@@ -27,7 +27,8 @@ class SHA(object):
     
     # offsets
     __bigsigmaoffsets_256 = [[2, 13, 22], [6, 11, 25]]
-    __bigsigmaoffsets_512 = [[28, 34, 39], [14, 18, 41]]
+    __bigsigmaoffsets_384 = [[28, 34, 39], [14, 18, 41]]
+    __bigsigmaoffsets_512 = __bigsigmaoffsets_384
 
     
     def _littlesigma(self, x, offsets):
@@ -37,8 +38,8 @@ class SHA(object):
                 SHR(x, offsets[0][3]))
         
     __littlesigmaoffsets_256 = [[7, 18, 3], [17, 19, 10]]
-    __littlesigmaoffsets_512 = [[1, 8, 7], [19, 61, 6]]
-    
+    __littlesigmaoffsets_384 = [[1, 8, 7], [19, 61, 6]]
+    __littlesigmaoffsets_512 = __littlesigmaoffsets_384
     
     # SHA-256 constants, FIPS 180-4 Section 4.2.2
     __K256 = [0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
@@ -50,8 +51,8 @@ class SHA(object):
               0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
               0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2]
     
-    # SHA-384 / SHA-512 constants, FIPS 180-4 Section 4.2.3
-    __K512 = [0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f, 0xe9b5dba58189dbbc,
+    # SHA-384  FIPS 180-4 Section 4.2.3
+    __K384 = [0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f, 0xe9b5dba58189dbbc,
               0x3956c25bf348b538, 0x59f111f1b605d019, 0x923f82a4af194f9b, 0xab1c5ed5da6d8118,
               0xd807aa98a3030242, 0x12835b0145706fbe, 0x243185be4ee4b28c, 0x550c7dc3d5ffb4e2,
               0x72be5d74f27b896f, 0x80deb1fe3b1696b1, 0x9bdc06a725c71235, 0xc19bf174cf692694,
@@ -72,23 +73,23 @@ class SHA(object):
               0x28db77f523047d84, 0x32caab7b40c72493, 0x3c9ebe0a15c9bebc, 0x431d67c49c100d4c,
               0x4cc5d4becb3e42b6, 0x597f299cfc657e2a, 0x5fcb6fab3ad6faec, 0x6c44198c4a475817]
     
-    @staticmethod
-    def _create_padding(length, block_size):
+    # SHA-512 constants FIPS 180-4 Section 4.2.3 (same as SHA-384 constants)
+    __K512 = __K384
+    
+    def _create_padding(self):
         # Creates a padding string for a SHA message.  See FIPS 180-4 Section 5.1
-        # Only supports whole-byte messages (bitlength = 0 mod 8)
-        # length is in bits
-        
+
         # size of the last block prior to length value
-        desired_size = (block_size * 7) // 8   # Note that 448 = (7/8) * 512, 896 = (7/8) * 1024
+        desired_size = (self._block_size * 7) // 8   # Note that 56 = (7/8) * 64, 112 = (7/8) * 128
         # size of the length value
-        length_size = (block_size // 8)
+        length_size = (self._block_size // 8)
         # amount of zero bytes = (desired size - (data)) mod block_size
-        zero_bytes = desired_size - ((length + 1)%  block_size)
+        zero_bytes = desired_size - ((self._length + 1) %  self._block_size)
         if (zero_bytes < 0):
-            zero_bytes += block_size
+            zero_bytes += self._block_size
         
         # padding = 0x80 + zeroes + length
-        padding = b'\x80' + b'\x00' * (zero_bytes) + length.to_bytes(block_size//64, order='big')
+        padding = b'\x80' + b'\x00' * (zero_bytes) + (self._length*8).to_bytes(length_size, order='big')
         
         return padding
     
