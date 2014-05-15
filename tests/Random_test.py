@@ -34,3 +34,6 @@ class Random_test(unittest.TestCase):
         drbg.get_bytes(1)
         drbg.get_bytes(1024)
         drbg.get_bytes(4096)
+        
+if __name__ == "__main__":
+    unittest.main()

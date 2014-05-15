@@ -3,6 +3,7 @@ from details.MJRCTRDRBG import CTRDRBG
 from details.MJRAES import AES
 from time import time
 from os import urandom
+from os import getpid, getppid
 
 class Random(object):
     '''The interface for random byte generator'''
@@ -21,6 +22,8 @@ class Random(object):
         nonce = microseconds.to_bytes(12, byteorder='big')
         personalization = b'MJR CTR-DRBG'
         self.__drbg._Instantiate(seed, nonce, personalization)
+        # To detect a later fork
+        self.__pid = getpid()
     
     @staticmethod
     def __generate_seed(numbytes):
@@ -30,6 +33,10 @@ class Random(object):
         return urandom(numbytes)
     
     def get_bytes(self, numbytes):
+        if (self.__pid != getpid()):
+            # fork() happened -- reseed
+            self.__drbg._Reseed(self.__generate_seed(1024), None)
+            self.__pid = getpid()
         try:
             rand = self.__drbg._Generate(numbytes, None)
         except AssertionError:
