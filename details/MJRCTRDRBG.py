@@ -122,6 +122,8 @@ class CTRDRBG(object):
     def _Reseed(self, entropy, additional_input):
         '''Reseed with Derivation Function, section 10.2.1.4.2'''
         
+        if additional_input == None:
+            additional_input = b''
         # Step 1
         seed_material = entropy + additional_input
         # Step 2
