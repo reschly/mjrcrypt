@@ -1,41 +1,33 @@
 '''My SHA (256, 384, 512) module.'''
 
-from details.MJRUTIL import ROTR, ROTL, SHR, NOT, ADDWORD
+from details.MJRUTIL import ROTR, ROTL, SHR, NOT, ADDWORD, MAJORITY, CHOOSE, CHUNKS
 
 
 class SHA(object):
     '''
     An implementation of SHA-256, 384, 512 from FIPS 180-4
     '''
-    
-    @staticmethod
-    def _ch(x, y, z, bitlen=32):
-        '''FIPS 180-4, Section 4.1.2/4.1.3'''
-        return (x & y) ^ (NOT(x, bitlen) & z)
-    
-    @staticmethod
-    def _maj(x, y, z):
-        '''FIPS 180-4, Section 4.1.2/4.1.3'''
-        return (x & y) ^ (x & z) ^ (y & z)
-    
-    
-    def _bigsigma(self, x, offsets):
+
+    def __bigsigma(self, x, offsets):
         '''FIPS 180-4, Section 4.1.2 / 4.1.3'''
-        return (ROTR(x, offsets[0], bitlen = self._bitlength) ^ 
-                ROTR(x, offsets[1], bitlen = self._bitlength) ^ 
-                ROTR(x, offsets[2], bitlen = self._bitlength))
+        return (ROTR(x, offsets[0], bitlen = self.__bitlength) ^ 
+                ROTR(x, offsets[1], bitlen = self.__bitlength) ^ 
+                ROTR(x, offsets[2], bitlen = self.__bitlength))
 
     def _littlesigma(self, x, offsets):
         '''FIPS 180-4, Section 4.1.2 / 4.1.3'''
-        return (ROTR(x, offsets[0][1], bitlen = self._bitlength) ^ 
-                ROTR(x, offsets[0][2], bitlen = self._bitlength) ^ 
-                SHR(x, offsets[0][3]))
+        return (ROTR(x, offsets[0], bitlen = self.__bitlength) ^ 
+                ROTR(x, offsets[1], bitlen = self.__bitlength) ^ 
+                SHR(x, offsets[2]))
         
-    # offsets
-    __sigmaoffsets_256 = [[2, 13, 22], [6, 11, 25], [7, 18, 3], [17, 19, 10]]
-    __sigmaoffsets_384 = [[28, 34, 39], [14, 18, 41], [1, 8, 7], [19, 61, 6]]
-    __sigmaoffsets_512 = __sigmaoffsets_384
-    
+    # offsets for sigma functions
+    __bigsigma_offsets_256 = [[2, 13, 22], [6, 11, 25]]
+    __littlesigma_offsets_256 = [[7, 18, 3], [17, 19, 10]]
+    __bigisgma_offsets_384 = [[28, 34, 39], [14, 18, 41]]
+    __littlesigma_offsets_384 = [[1, 8, 7], [19, 61, 6]] 
+    __bigisgma_offsets_512 = __bigisgma_offsets_384
+    __littlesigma_offsets_512 = __littlesigma_offsets_384
+        
     # SHA-256 constants, FIPS 180-4 Section 4.2.2
     __K256 = [0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
               0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
@@ -71,7 +63,7 @@ class SHA(object):
     # SHA-512 constants FIPS 180-4 Section 4.2.3 (same as SHA-384 constants)
     __K512 = __K384
     
-    def _add_padding(self):
+    def __add_padding(self):
         # Creates a padding string for a SHA message.  See FIPS 180-4 Section 5.1
 
         # size of the last block prior to length value
@@ -79,15 +71,16 @@ class SHA(object):
         # size of the length value
         length_size = (self._block_size // 8)
         # amount of zero bytes = (desired size - (data)) mod block_size
-        zero_bytes = desired_size - ((self._length + 1) %  self._block_size)
+        zero_bytes = desired_size - ((self.__length + 1) %  self._block_size)
         if (zero_bytes < 0):
             zero_bytes += self._block_size
         
         # padding = 0x80 + zeroes + length
-        padding = b'\x80' + b'\x00' * (zero_bytes) + (self._length*8).to_bytes(length_size, order='big')
+        padding = b'\x80' + b'\x00' * (zero_bytes) + (self.__length*8).to_bytes(length_size, order='big')
         
         self.__current_block += padding
-    
+        self.__length += len(padding)
+          
     # Initial H values for SHA-256, FIPS 180-4 Section 5.3.3
     __initial_h_256 = [0x6a09e667,
                        0xbb67ae85,
@@ -117,3 +110,71 @@ class SHA(object):
                        0x9b05688c2b3e6c1f,
                        0x1f83d9abfb41bd6b,
                        0x5be0cd19137e2179]
+
+
+    # SHA-256 initialization, from FIPS 180-4, Section 6.2.1
+    def _SHA256_init(self):
+        self.__state = SHA.__initial_h_256;
+        self.__length = 0;
+        self.__unhashed_data = b'';
+        
+    # SHA-256 update, based on FIPS 180-4, Section 6.2.2
+    def _SHA256_update(self, data):
+        self.__unhashed_data += data;
+        self.__length += len(data); 
+        blocks = [];
+        if len(self.__unhashed_data) == self._block_size:
+            blocks = [self.__unhashed_data];
+            self.__unhashed_data = b'';
+        if len(self.__unhashed_data >= self._block_size):
+            blocks = CHUNKS(self.__unhashed_data, self._block)
+            self.__unhashed_data = blocks[len(blocks)-1];
+            blocks = blocks[0:len(blocks)-1];
+        for block in blocks:
+            # Prepare message schedule
+            block_words = CHUNKS(block, 4)
+            W = [0] * 80
+            for i in range(0, 16):
+                W[i] = int.from_bytes(block_words[i], byteorder='big')
+            for i in range(16, 64):
+                W[i] = self._littlesigma(W[i-2], SHA.__littlesigma_offsets_256[1]) + \
+                    W[i-7] + self._littlesigma(W[i-15], SHA.__littlesigma_offsets_256[0]) + \
+                    W[i-16]
+                W[i] &= 0xffffffff
+            #initialize 8 working variables
+            a, b, c, d, e, f, g, h = self.__state
+            # step 3
+            for t in range(0, 64):
+                T1 = h + self.__bigsigma(e, SHA.__bigsigma_offsets_256[1]) + \
+                    CHOOSE(e, f, g, self.__bitlen) + \
+                    SHA.__K256[t] + W[t]
+                T1 &= 0xffffffff
+                T2 = self.__bigsigma(a, SHA.__bigsigma_offsets_256[0]) + MAJORITY(a, b, c)
+                T2 &= 0xffffffff
+                h = g
+                g = f
+                f = e
+                e = (d + T1) & 0xffffffff
+                d = c
+                c = b
+                b = a
+                a = (T1 + T2) & 0xffffffff
+            # set state
+            self.__state[0] = (self.__state[0] + a) & 0xffffffff
+            self.__state[1] = (self.__state[1] + a) & 0xffffffff
+            self.__state[2] = (self.__state[2] + a) & 0xffffffff
+            self.__state[3] = (self.__state[3] + a) & 0xffffffff
+            self.__state[4] = (self.__state[4] + a) & 0xffffffff
+            self.__state[5] = (self.__state[5] + a) & 0xffffffff
+            self.__state[6] = (self.__state[6] + a) & 0xffffffff
+            self.__state[7] = (self.__state[7] + a) & 0xffffffff
+        # end for block in blocks
+    # end _SHA256_update
+    
+    def _SHA256_final(self):
+        self.__add_padding()
+        self._SHA256_update(b'')
+        result = b''
+        for word in self.__state:
+            result += int.to_bytes(word, 4, byteorder='big')
+        return result
